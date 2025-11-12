@@ -61,13 +61,16 @@ export class AuditLogger {
   private consoleLogging: boolean;
 
   private constructor() {
-    // Set up log directory and file
-    const logDir = join(process.cwd(), 'logs');
-    if (!existsSync(logDir)) {
-      mkdirSync(logDir, { recursive: true });
+    // Set up log directory and file (server only)
+    if (fs && path) {
+      const logDir = path.join(process.cwd(), 'logs');
+      if (!fs.existsSync(logDir)) {
+        fs.mkdirSync(logDir, { recursive: true });
+      }
+
+      this.logFilePath = path.join(logDir, `audit-${new Date().toISOString().split('T')[0]}.log`);
     }
 
-    this.logFilePath = join(logDir, `audit-${new Date().toISOString().split('T')[0]}.log`);
     this.encryptionEnabled = process.env.ENCRYPT_AUDIT_LOGS === 'true';
     this.consoleLogging = process.env.NODE_ENV === 'development';
   }
