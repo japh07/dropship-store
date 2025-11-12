@@ -490,19 +490,43 @@ export class FinancialAnalyticsService {
         }
       };
 
-      return kpiDashboard;
-      },
-      kpis: {
-        customerAcquisitionCost: metrics.customerAcquisitionCost,
-        customerLifetimeValue: metrics.customerLifetimeValue,
-        ltvToCACRatio: metrics.ltvToCACRatio,
-        grossRetentionRate: metrics.grossRetentionRate,
-        netRetentionRate: metrics.netRetentionRate
-      },
-      trends: profitabilityTrends,
-      alerts: await this.getFinancialAlerts(startDate, endDate),
-      lastUpdated: new Date()
-    };
+      const kpiDashboard: FinancialKPIDashboard = {
+        timeframe,
+        period: { startDate, endDate },
+        revenue: {
+          total: pnl.revenue.total,
+          growth: metrics.revenueGrowth,
+          breakdown: pnl.revenue.breakdown
+        },
+        profitability: {
+          grossMargin: pnl.grossProfit.margin,
+          operatingMargin: pnl.operatingIncome.margin,
+          netMargin: pnl.netIncome.margin,
+          netIncome: pnl.netIncome.afterTax
+        },
+        expenses: {
+          total: pnl.operatingExpenses.total,
+          budgetVariance: budgetPerformance.variance,
+          breakdown: pnl.operatingExpenses.breakdown
+        },
+        cash: {
+          position: cashPosition,
+          burnRate: metrics.monthlyBurnRate,
+          runway: metrics.cashRunway
+        },
+        kpis: {
+          customerAcquisitionCost: metrics.customerAcquisitionCost,
+          customerLifetimeValue: metrics.customerLifetimeValue,
+          ltvToCACRatio: metrics.ltvToCACRatio,
+          grossRetentionRate: metrics.grossRetentionRate,
+          netRetentionRate: metrics.netRetentionRate
+        },
+        trends: profitabilityTrends,
+        alerts: await this.getFinancialAlerts(startDate, endDate),
+        lastUpdated: new Date()
+      };
+
+    return kpiDashboard;
 
     } catch (error) {
       console.error('Financial KPIs generation failed:', error);
