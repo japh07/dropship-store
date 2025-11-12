@@ -174,10 +174,8 @@ const nextConfig = {
   experimental: {
     // Enable server actions security
     serverComponentsExternalPackages: ['@prisma/client'],
-    // Enable strict mode for better security
-    reactStrictMode: true,
     // Enable SWC minification for better performance and security
-    swcMinification: true,
+    swcMinify: true,
   },
 
   // Security: Build configuration
