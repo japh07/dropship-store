@@ -24,24 +24,6 @@ export default function SessionProviderWrapper({ children }: SessionProviderWrap
       // Set session refetch interval (5 minutes)
       refetchInterval={5 * 60}
 
-      // Custom error handling
-      onError={(error) => {
-        console.error('SessionProvider error:', error);
-        // Log authentication errors to audit logger
-        if (typeof window !== 'undefined' && window.fetch) {
-          window.fetch('/api/auth/error', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              error: error.message,
-              timestamp: new Date().toISOString(),
-            }),
-          }).catch(() => {
-            // Silently fail to avoid infinite loops
-          });
-        }
-      }}
-
       // Custom session loading state
       loading={
         <div className="flex items-center justify-center min-h-screen">
