@@ -413,7 +413,8 @@ export const authSecurity = {
    * Verify OAuth state parameter
    */
   verifyState: (state: string, signature: string): boolean => {
-    return EnvEncryption.verify(state, signature, Buffer.from(process.env.NEXTAUTH_SECRET!, 'utf-8'));
+    const secret = process.env.NEXTAUTH_SECRET || 'fallback-secret';
+    return EnvEncryption.verify(state, signature, Buffer.from(secret, 'utf-8'));
   },
 
   /**
