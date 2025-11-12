@@ -275,7 +275,7 @@ export class AuditLogger {
         }
 
         const logContent = fs.readFileSync(this.logFilePath, 'utf8');
-        const logLines = logContent.trim().split('\n').filter(line => line);
+        const logLines = logContent.trim().split('\n').filter((line: string) => line);
 
         for (const line of logLines) {
           try {
