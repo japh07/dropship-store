@@ -59,7 +59,7 @@ function checkRateLimit(ip: string): { allowed: boolean; remaining: number; rese
   const windowStart = now - rateLimitConfig.windowMs;
 
   // Clean up expired entries
-  for (const [key, value] of rateLimitConfig.successfulRequests.entries()) {
+  for (const [key, value] of Array.from(rateLimitConfig.successfulRequests.entries())) {
     if (now > value.resetTime) {
       rateLimitConfig.successfulRequests.delete(key);
     }
