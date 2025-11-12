@@ -145,12 +145,15 @@ export class AuditLogger {
    */
   private async writeLogEntry(entry: AuditLogEntry): Promise<void> {
     try {
-      const logLine = JSON.stringify(entry) + '\n';
-      appendFileSync(this.logFilePath, logLine, 'utf8');
-
-      // Log to console in development
-      if (this.consoleLogging) {
+      // Log to console in development or client-side
+      if (this.consoleLogging || typeof window !== 'undefined') {
         console.log(`[AUDIT-${entry.level}] ${entry.category}:${entry.event}`, entry);
+      }
+
+      // Write to file only on server-side
+      if (fs && this.logFilePath) {
+        const logLine = JSON.stringify(entry) + '\n';
+        fs.appendFileSync(this.logFilePath, logLine, 'utf8');
       }
     } catch (error) {
       console.error('Failed to write audit log:', error);
