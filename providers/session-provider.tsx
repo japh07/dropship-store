@@ -23,13 +23,6 @@ export default function SessionProviderWrapper({ children }: SessionProviderWrap
 
       // Set session refetch interval (5 minutes)
       refetchInterval={5 * 60}
-
-      // Custom session loading state
-      loading={
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        </div>
-      }
     >
       {children}
     </SessionProvider>
