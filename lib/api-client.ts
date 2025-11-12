@@ -510,4 +510,3 @@ export const apiClient = new SecureAPIClient();
 
 // Export utilities
 export { SecureAPIClient as APIClient };
-export type { APIResponse };
