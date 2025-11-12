@@ -226,11 +226,11 @@ export class SecureAPIClient {
           }
 
           // Handle unauthorized/forbidden - potential token refresh
-          if ((response?.status === 401 || response?.status === 403) && !error.config?.headers['X-Retry-After']) {
+          if ((response?.status === 401 || response?.status === 403) && error.config && !error.config.headers['X-Retry-After']) {
             try {
               await this.refreshAuthToken();
               error.config.headers['X-Retry-After'] = 'true';
-              return this.axiosInstance.request(error.config!);
+              return this.axiosInstance.request(error.config);
             } catch (refreshError) {
               // Token refresh failed, log and continue with error
               await auditLogger.logSecurityEvent('token_refresh_failed', {
