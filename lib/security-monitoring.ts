@@ -184,7 +184,7 @@ export class SecurityMonitoring {
       if (typeof count === 'number' && count >= 10) {
         await this.createSecurityEvent({
           type: 'authentication',
-          severity: count >= 50 ? 'critical' : 'high',
+          severity: (typeof count === 'number' && count >= 50) ? 'critical' : 'high',
           title: 'Potential Brute Force Attack Detected',
           description: `${count} failed authentication attempts from IP: ${ip}`,
           timestamp: new Date().toISOString(),
