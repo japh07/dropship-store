@@ -148,9 +148,9 @@ export class SecureAPIClient {
     // Response interceptor
     this.axiosInstance.interceptors.response.use(
       async (response) => {
-        const startTime = response.config.metadata?.startTime || Date.now();
+        const startTime = (response.config as any).metadata?.startTime || Date.now();
         const responseTime = Date.now() - startTime;
-        const requestId = response.config.metadata?.requestId;
+        const requestId = (response.config as any).metadata?.requestId;
 
         try {
           // Decrypt response data if encrypted
