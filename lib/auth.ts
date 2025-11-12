@@ -167,7 +167,7 @@ export async function getCurrentUser(req?: NextRequest): Promise<AuthUser | null
         id: token.sub,
         email: token.email,
         name: token.name || '',
-        picture: token.picture,
+        image: token.picture,
         provider: token.provider,
       };
     } else {
