@@ -457,7 +457,7 @@ export class SecureAPIClient {
       },
     });
 
-    return response.data;
+    return response.data as APIResponse<T>;
   }
 
   /**
