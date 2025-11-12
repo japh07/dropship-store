@@ -396,7 +396,7 @@ export class SecureAPIClient {
    */
   async get<T = any>(url: string, config?: AxiosRequestConfig): Promise<APIResponse<T>> {
     const response = await this.axiosInstance.get<T>(url, config);
-    return response.data;
+    return response.data as APIResponse<T>;
   }
 
   /**
@@ -404,7 +404,7 @@ export class SecureAPIClient {
    */
   async post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<APIResponse<T>> {
     const response = await this.axiosInstance.post<T>(url, data, config);
-    return response.data;
+    return response.data as APIResponse<T>;
   }
 
   /**
@@ -412,7 +412,7 @@ export class SecureAPIClient {
    */
   async put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<APIResponse<T>> {
     const response = await this.axiosInstance.put<T>(url, data, config);
-    return response.data;
+    return response.data as APIResponse<T>;
   }
 
   /**
@@ -420,7 +420,7 @@ export class SecureAPIClient {
    */
   async patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<APIResponse<T>> {
     const response = await this.axiosInstance.patch<T>(url, data, config);
-    return response.data;
+    return response.data as APIResponse<T>;
   }
 
   /**
@@ -428,7 +428,7 @@ export class SecureAPIClient {
    */
   async delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<APIResponse<T>> {
     const response = await this.axiosInstance.delete<T>(url, config);
-    return response.data;
+    return response.data as APIResponse<T>;
   }
 
   /**
