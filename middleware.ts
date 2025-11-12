@@ -276,7 +276,7 @@ export async function middleware(request: NextRequest) {
         }
 
         // Validate token expiration
-        if (token.exp && Date.now() >= token.exp * 1000) {
+        if (token.exp && typeof token.exp === 'number' && Date.now() >= token.exp * 1000) {
           await auditLogger.logAuthEvent('token_expired_access', {
             userId: token.sub,
             ip,
