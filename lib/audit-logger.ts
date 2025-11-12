@@ -451,20 +451,22 @@ export class AuditLogger {
    */
   async cleanupOldLogs(retentionDays: number = 90): Promise<void> {
     try {
-      const logDir = join(process.cwd(), 'logs');
+      if (!fs || !path) return; // Skip on client-side
+
+      const logDir = path.join(process.cwd(), 'logs');
       const cutoffDate = new Date();
       cutoffDate.setDate(cutoffDate.getDate() - retentionDays);
 
-      if (existsSync(logDir)) {
-        const files = require('fs').readdirSync(logDir);
+      if (fs.existsSync(logDir)) {
+        const files = fs.readdirSync(logDir);
 
         for (const file of files) {
           if (file.startsWith('audit-') && file.endsWith('.log')) {
-            const filePath = join(logDir, file);
-            const stats = require('fs').statSync(filePath);
+            const filePath = path.join(logDir, file);
+            const stats = fs.statSync(filePath);
 
             if (stats.mtime < cutoffDate) {
-              require('fs').unlinkSync(filePath);
+              fs.unlinkSync(filePath);
               console.log(`Deleted old audit log: ${file}`);
             }
           }
