@@ -1,6 +1,13 @@
-import { writeFileSync, appendFileSync, existsSync, mkdirSync } from 'fs';
-import { join } from 'path';
 import { EnvEncryption } from './encryption';
+
+// Dynamic imports for server-side only modules
+let fs: any = null;
+let path: any = null;
+
+if (typeof window === 'undefined') {
+  fs = require('fs');
+  path = require('path');
+}
 
 /**
  * Audit log entry interface
