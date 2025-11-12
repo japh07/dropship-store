@@ -24,9 +24,6 @@ export default function SessionProviderWrapper({ children }: SessionProviderWrap
       // Set session refetch interval (5 minutes)
       refetchInterval={5 * 60}
 
-      // Enable session updates in background
-      sessionUpdateDelay={0}
-
       // Custom error handling
       onError={(error) => {
         console.error('SessionProvider error:', error);
