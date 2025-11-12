@@ -616,7 +616,7 @@ export class SecurityMonitoring {
     }, {} as Record<string, number>);
 
     return Object.entries(ipCounts)
-      .map(([ip, count]) => ({ ip, count }))
+      .map(([ip, count]) => ({ ip, count: typeof count === 'number' ? count : 0 }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 10);
   }
