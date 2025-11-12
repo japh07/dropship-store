@@ -267,32 +267,34 @@ export class AuditLogger {
   async searchLogs(filter: LogFilterOptions = {}): Promise<AuditLogEntry[]> {
     try {
       const logs: AuditLogEntry[] = [];
-      const currentLogFile = this.logFilePath;
 
-      if (!existsSync(currentLogFile)) {
-        return logs;
-      }
+      // Server-side file reading
+      if (fs && this.logFilePath) {
+        if (!fs.existsSync(this.logFilePath)) {
+          return logs;
+        }
 
-      const logContent = require('fs').readFileSync(currentLogFile, 'utf8');
-      const logLines = logContent.trim().split('\n').filter(line => line);
+        const logContent = fs.readFileSync(this.logFilePath, 'utf8');
+        const logLines = logContent.trim().split('\n').filter(line => line);
 
-      for (const line of logLines) {
-        try {
-          const entry: AuditLogEntry = JSON.parse(line);
+        for (const line of logLines) {
+          try {
+            const entry: AuditLogEntry = JSON.parse(line);
 
-          // Apply filters
-          if (filter.startDate && new Date(entry.timestamp) < filter.startDate) continue;
-          if (filter.endDate && new Date(entry.timestamp) > filter.endDate) continue;
-          if (filter.userId && entry.userId !== filter.userId) continue;
-          if (filter.email && entry.email !== filter.email) continue;
-          if (filter.level && !filter.level.includes(entry.level)) continue;
-          if (filter.category && !filter.category.includes(entry.category)) continue;
-          if (filter.event && !entry.event.includes(filter.event)) continue;
-          if (filter.path && entry.path && !entry.path.includes(filter.path)) continue;
+            // Apply filters
+            if (filter.startDate && new Date(entry.timestamp) < filter.startDate) continue;
+            if (filter.endDate && new Date(entry.timestamp) > filter.endDate) continue;
+            if (filter.userId && entry.userId !== filter.userId) continue;
+            if (filter.email && entry.email !== filter.email) continue;
+            if (filter.level && !filter.level.includes(entry.level)) continue;
+            if (filter.category && !filter.category.includes(entry.category)) continue;
+            if (filter.event && !entry.event.includes(filter.event)) continue;
+            if (filter.path && entry.path && !entry.path.includes(filter.path)) continue;
 
-          logs.push(entry);
-        } catch (parseError) {
-          console.error('Failed to parse log line:', parseError);
+            logs.push(entry);
+          } catch (parseError) {
+            console.error('Failed to parse log line:', parseError);
+          }
         }
       }
 
