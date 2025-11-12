@@ -665,7 +665,11 @@ export class SecurityMonitoring {
     // Send critical alerts immediately
     for (const alert of this.alerts) {
       if (alert.enabled && alert.conditions.severityThreshold === 'critical') {
-        const securityEvent = { ...event, id: crypto.randomUUID(), resolved: false };
+        const securityEvent: SecurityEvent = {
+          id: crypto.randomUUID(),
+          ...event,
+          resolved: false,
+        };
         await this.sendAlert(alert, securityEvent);
       }
     }
