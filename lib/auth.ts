@@ -405,7 +405,8 @@ export const authSecurity = {
    */
   generateState: (): string => {
     const state = crypto.randomUUID();
-    return EnvEncryption.sign(state, Buffer.from(process.env.NEXTAUTH_SECRET!, 'utf-8'));
+    const secret = process.env.NEXTAUTH_SECRET || 'fallback-secret';
+    return EnvEncryption.sign(state, Buffer.from(secret, 'utf-8'));
   },
 
   /**
