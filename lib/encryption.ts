@@ -247,10 +247,11 @@ export class EnvEncryption {
   /**
    * Sign data using environment-based HMAC key
    * @param data - Data to sign
+   * @param optionalKey - Optional custom key for signing
    * @returns HMAC signature
    */
-  static sign(data: string): string {
-    const key = this.getKey();
+  static sign(data: string, optionalKey?: Buffer): string {
+    const key = optionalKey || this.getKey();
     return AESEncryption.signData(data, key);
   }
 
