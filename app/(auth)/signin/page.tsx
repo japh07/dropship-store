@@ -53,7 +53,7 @@ export default function SignInPage() {
         const session = await getSession();
         if (session) {
           await auditLogger.logAuthEvent('signin_redirect_existing_session', {
-            userId: session.user?.id,
+            userId: (session.user as any)?.id,
             email: session.user?.email,
             callbackUrl,
           });
