@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { signIn, getSession, getProviders } from 'next-auth/react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
+import Button from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Icons } from '@/components/ui/icons';
