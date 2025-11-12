@@ -322,8 +322,8 @@ export class SecurityMonitoring {
    */
   async createSecurityEvent(event: Omit<SecurityEvent, 'id'>): Promise<string> {
     const securityEvent: SecurityEvent = {
-      ...event,
       id: crypto.randomUUID(),
+      ...event,
     };
 
     this.eventHistory.push(securityEvent);
