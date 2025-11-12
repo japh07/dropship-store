@@ -435,7 +435,7 @@ export const authSecurity = {
   },
 };
 
-export default {
+const authUtils = {
   getAuthSession,
   getJWTToken,
   isAuthenticated,
@@ -448,3 +448,5 @@ export default {
   refreshToken,
   authSecurity,
 };
+
+export default authUtils;
