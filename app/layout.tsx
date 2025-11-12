@@ -2,6 +2,7 @@ import { Urbanist } from 'next/font/google'
 
 import ModalProvider from '@/providers/modal-provider'
 import ToastProvider from '@/providers/toast-provider'
+import SessionProviderWrapper from '@/providers/session-provider'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 
