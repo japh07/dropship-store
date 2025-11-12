@@ -218,7 +218,7 @@ export class SecurityMonitoring {
 
     // Check for excessive API usage (more than 1000 calls per hour)
     for (const [userId, count] of Object.entries(userGroups)) {
-      if (count >= 1000) {
+      if (typeof count === 'number' && count >= 1000) {
         await this.createSecurityEvent({
           type: 'malicious_request',
           severity: 'medium',
