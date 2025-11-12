@@ -639,7 +639,7 @@ export class SecurityMonitoring {
    */
   private processAlertThrottling(): void {
     const oneHourAgo = Date.now() - 60 * 60 * 1000;
-    for (const [alertId, timestamp] of this.alertThrottle.entries()) {
+    for (const [alertId, timestamp] of Array.from(this.alertThrottle.entries())) {
       if (timestamp < oneHourAgo) {
         this.alertThrottle.delete(alertId);
       }
