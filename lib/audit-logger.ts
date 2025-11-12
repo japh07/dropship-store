@@ -326,7 +326,7 @@ export class AuditLogger {
         endDate: timeRange?.end,
       });
 
-      const stats = {
+      const stats: any = {
         totalLogs: logs.length,
         byLevel: {} as Record<string, number>,
         byCategory: {} as Record<string, number>,
