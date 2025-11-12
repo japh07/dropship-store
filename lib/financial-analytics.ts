@@ -486,11 +486,11 @@ export class FinancialAnalyticsService {
         cash: {
           position: cashPosition,
           burnRate: metrics.monthlyBurnRate,
-            runway: months
-          };
+          runway: metrics.cashRunway
         }
+      };
 
-        return months;
+      return kpiDashboard;
       },
       kpis: {
         customerAcquisitionCost: metrics.customerAcquisitionCost,
