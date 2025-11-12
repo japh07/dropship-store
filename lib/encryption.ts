@@ -258,10 +258,11 @@ export class EnvEncryption {
    * Verify data signature using environment-based HMAC key
    * @param data - Data to verify
    * @param signature - Signature to verify
+   * @param optionalKey - Optional custom key for verification
    * @returns True if authentic
    */
-  static verify(data: string, signature: string): boolean {
-    const key = this.getKey();
+  static verify(data: string, signature: string, optionalKey?: Buffer): boolean {
+    const key = optionalKey || this.getKey();
     return AESEncryption.verifyIntegrity(data, signature, key);
   }
 }
