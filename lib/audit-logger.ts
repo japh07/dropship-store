@@ -56,7 +56,7 @@ export interface LogFilterOptions {
  */
 export class AuditLogger {
   private static instance: AuditLogger;
-  private logFilePath: string;
+  private logFilePath: string | undefined;
   private encryptionEnabled: boolean;
   private consoleLogging: boolean;
 
