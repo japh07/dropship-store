@@ -4,6 +4,7 @@ import { auditLogger, LogFilterOptions } from './audit-logger';
  * Security event types for monitoring
  */
 export interface SecurityEvent {
+  id: string;
   type: 'authentication' | 'authorization' | 'data_breach' | 'malicious_request' | 'system_threat';
   severity: 'low' | 'medium' | 'high' | 'critical';
   title: string;
