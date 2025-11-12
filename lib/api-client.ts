@@ -375,8 +375,8 @@ export class SecureAPIClient {
    * Get standardized error message
    */
   private getErrorMessage(error: AxiosError): string {
-    if (error.response?.data?.message) {
-      return error.response.data.message;
+    if (error.response?.data && typeof (error.response.data as any).message === 'string') {
+      return (error.response.data as any).message;
     }
 
     switch (error.response?.status) {
