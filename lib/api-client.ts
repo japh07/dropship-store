@@ -210,9 +210,9 @@ export class SecureAPIClient {
       },
       async (error: AxiosError) => {
         const response = error.response;
-        const startTime = error.config?.metadata?.startTime || Date.now();
+        const startTime = (error.config as any)?.metadata?.startTime || Date.now();
         const responseTime = Date.now() - startTime;
-        const requestId = error.config?.metadata?.requestId;
+        const requestId = (error.config as any)?.metadata?.requestId;
 
         try {
           // Handle rate limiting
