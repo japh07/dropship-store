@@ -181,7 +181,7 @@ export class SecurityMonitoring {
 
     // Check for suspicious activity (more than 10 failed attempts from same IP)
     for (const [ip, count] of Object.entries(ipGroups)) {
-      if (count >= 10) {
+      if (typeof count === 'number' && count >= 10) {
         await this.createSecurityEvent({
           type: 'authentication',
           severity: count >= 50 ? 'critical' : 'high',
