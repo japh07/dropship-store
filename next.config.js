@@ -164,12 +164,8 @@ const nextConfig = {
       config.devtool = false;
     }
 
-    // Security: Enable source map validation
-    config.module.rules.push({
-      test: /\.js$/,
-      enforce: 'pre',
-      use: ['source-map-loader'],
-    });
+    // Security: Additional webpack configurations can be added here
+    // Note: source-map-loader would need to be installed separately
 
     return config;
   },
