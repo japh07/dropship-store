@@ -100,7 +100,7 @@ export class SecureAPIClient {
         // Add request ID for tracking
         const requestId = crypto.randomUUID();
         config.headers['X-Request-ID'] = requestId;
-        config.metadata = { requestId, startTime };
+        (config as any).metadata = { requestId, startTime };
 
         try {
           // Add authentication headers if available
