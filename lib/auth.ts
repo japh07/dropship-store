@@ -110,7 +110,7 @@ export async function getJWTToken(req: NextRequest): Promise<JWTPayload | null> 
     }
 
     // Check token expiration
-    if (token.exp && Date.now() >= token.exp * 1000) {
+    if (token.exp && typeof token.exp === 'number' && Date.now() >= token.exp * 1000) {
       await auditLogger.logAuthEvent('token_expired_access', {
         userId: token.sub,
         email: token.email,
