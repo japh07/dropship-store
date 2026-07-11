@@ -1,11 +1,17 @@
 import { Billboard } from "@/types";
 
-const URL=`${process.env.NEXT_PUBLIC_API_URL}/billboards`;
+const getBillboard = async (id: string): Promise<Billboard | undefined> => {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (!baseUrl) return undefined;
 
-const getBillboard = async (id: string): Promise<Billboard> => {
-  const res = await fetch(`${URL}/${id}`);
+  try {
+    const res = await fetch(`${baseUrl}/billboards/${id}`);
+    if (!res.ok) return undefined;
 
-  return res.json();
+    return await res.json();
+  } catch {
+    return undefined;
+  }
 };
 
 export default getBillboard;
