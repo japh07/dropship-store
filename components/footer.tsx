@@ -2,11 +2,12 @@
 import { useEffect, useState } from 'react';
 
 const Footer = () => {
-  // Initialize the view count from localStorage or set it to 20 if it doesn't exist
-  const initialViews = parseInt(localStorage.getItem('viewCount') || '20');
-  const [views, setViews] = useState(initialViews);
+  const [views, setViews] = useState(20);
 
   useEffect(() => {
+    // Initialize the view count from localStorage now that we're on the client
+    setViews(parseInt(localStorage.getItem('viewCount') || '20'));
+
     // Increment the view count by 1 and store it in localStorage
     const incrementViewCount = () => {
       const newViews = views + 1;
