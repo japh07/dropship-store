@@ -1,11 +1,21 @@
 import { Product } from "@/types";
+import { createServiceClient } from "@/lib/supabase";
+import { getStorefrontId } from "@/lib/tenant";
+import { mapProduct } from "@/lib/mappers";
+import { PRODUCT_SELECT } from "@/lib/productQuery";
 
-const URL=`${process.env.NEXT_PUBLIC_API_URL}/products`;
-
-const getProduct = async (id: string): Promise<Product> => {
-  const res = await fetch(`${URL}/${id}`);
-
-  return res.json();
+const getProduct = async (id: string): Promise<Product | null> => {
+  const supabase = createServiceClient();
+  const { data: row } = await supabase
+    .from("storefront_products")
+    .select(PRODUCT_SELECT)
+    .eq("storefront_id", getStorefrontId())
+    .eq("is_published", true)
+    .eq("product_id", id)
+    .maybeSingle();
+  if (!row) return null;
+  const r: any = row;
+  return mapProduct({ ...r.products, is_featured: r.is_featured, category: r.category, color: r.color, size: r.size });
 };
 
 export default getProduct;
