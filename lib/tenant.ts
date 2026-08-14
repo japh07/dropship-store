@@ -26,7 +26,7 @@ export async function resolveStorefront(host: string): Promise<Storefront | null
   const supabase = createServiceClient()
   const cols = 'id, store_name, tagline, logo_url, banner_url, primary_color, template, is_age_restricted, is_published'
 
-  const sub = subdomainOf(host, base) || process.env.DEV_STOREFRONT_SUBDOMAIN || null
+  const sub = subdomainOf(host, base) || (process.env.NODE_ENV !== 'production' ? process.env.DEV_STOREFRONT_SUBDOMAIN : undefined) || null
   let row: Storefront | null = null
   if (sub) {
     const { data } = await supabase.from('storefronts').select(cols).eq('subdomain', sub).single()
