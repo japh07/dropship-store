@@ -1,11 +1,11 @@
 "use client";
 
-import { ShoppingBag } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import Button from "@/components/ui/button";
-import useCart from "@/hooks/use-cart";
+// Cart/checkout is out of scope for browsing-only v1.
+// The cart icon/link below is intentionally hidden; the underlying cart
+// store (useCart) and /cart route remain in place, unused, for a future
+// checkout sub-project.
 
 const NavbarActions = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -14,24 +14,12 @@ const NavbarActions = () => {
     setIsMounted(true);
   }, []);
 
-  const router = useRouter();
-  const cart = useCart();
-
   if (!isMounted) {
     return null;
   }
 
-  return ( 
+  return (
     <div className="ml-auto flex items-center gap-x-4">
-      <Button onClick={() => router.push('/cart')} className="flex items-center rounded-full bg-black px-4 py-2">
-        <ShoppingBag
-          size={20}
-          color="white"
-        />
-        <span className="ml-2 text-sm font-medium text-white">
-          {cart.items.length}
-        </span>
-      </Button>
     </div>
   );
 }

@@ -1,24 +1,19 @@
 "use client";
 
-import { ShoppingCart } from "lucide-react";
-
 import Currency  from "@/components/ui/currency";
-import Button from "@/components/ui/button";
 import { Product } from "@/types";
-import useCart from "@/hooks/use-cart";
+
+// Cart/checkout is out of scope for browsing-only v1.
+// The "Add To Cart" button below is intentionally hidden; the underlying
+// cart store (useCart) remains in place, unused, for a future checkout
+// sub-project.
 
 interface InfoProps {
   data: Product
 };
 
 const Info: React.FC<InfoProps> = ({ data }) => {
-  const cart = useCart();
-
-  const onAddToCart = () => {
-    cart.addItem(data);
-  }
-
-  return ( 
+  return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900">{data.name}</h1>
       <div className="mt-3 flex items-end justify-between">
@@ -38,12 +33,6 @@ const Info: React.FC<InfoProps> = ({ data }) => {
           <h3 className="font-semibold text-black">Color:</h3>
           <div className="h-6 w-6 rounded-full border border-gray-600" style={{ backgroundColor: data?.color?.value }} />
         </div>
-      </div>
-      <div className="mt-10 flex items-center gap-x-3">
-        <Button onClick={onAddToCart} className="flex items-center gap-x-2">
-          Add To Cart
-          <ShoppingCart size={20} />
-        </Button>
       </div>
     </div>
   );
