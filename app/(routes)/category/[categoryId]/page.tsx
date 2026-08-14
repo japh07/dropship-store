@@ -8,6 +8,7 @@ import getProducts from "@/actions/get-products";
 import getCategory from '@/actions/get-category';
 import getSizes from '@/actions/get-sizes';
 import getColors from '@/actions/get-colors';
+import { notFound } from 'next/navigation';
 
 import Filter from './components/filter';
 import MobileFilters from './components/mobile-filters';
@@ -36,6 +37,10 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
   const sizes = await getSizes();
   const colors = await getColors();
   const category = await getCategory(params.categoryId);
+
+  if (!category) {
+    notFound();
+  }
 
   return (
     <div className="bg-white">

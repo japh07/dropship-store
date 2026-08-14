@@ -4,6 +4,7 @@ import Info from '@/components/info';
 import getProduct from '@/actions/get-product';
 import getProducts from '@/actions/get-products';
 import Container from '@/components/ui/container';
+import { notFound } from 'next/navigation';
 
 export const revalidate = 0;
 
@@ -17,13 +18,14 @@ const ProductPage: React.FC<ProductPageProps> = async ({
   params
  }) => {
   const product = await getProduct(params.productId);
-  const suggestedProducts = await getProducts({ 
-    categoryId: product?.category?.id
-  });
 
   if (!product) {
-    return null;
+    notFound();
   }
+
+  const suggestedProducts = await getProducts({
+    categoryId: product.category?.id
+  });
 
   return (
     <div className="bg-white">
