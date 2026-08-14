@@ -1,9 +1,12 @@
 import { Urbanist } from 'next/font/google'
+import { headers } from 'next/headers'
 
 import ModalProvider from '@/providers/modal-provider'
 import ToastProvider from '@/providers/toast-provider'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
+import AgeGate from '@/components/age-gate'
+import { resolveStorefront } from '@/lib/tenant'
 
 import './globals.css'
 
@@ -20,17 +23,32 @@ export const metadata = {
 
 
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  // Re-resolve the storefront in the layout (Task 9's resolveStorefront already
+  // returns the full Storefront shape needed for branding). The middleware has
+  // already 404'd unresolvable hosts, so this is normally non-null, but we
+  // still fall back gracefully rather than throwing in the layout.
+  const host = headers().get('host') || ''
+  const storefront = await resolveStorefront(host)
+
   return (
     <html lang="en">
-      <body className={font.className}>
+      <body
+        className={font.className}
+        style={storefront?.primary_color ? ({ '--primary-color': storefront.primary_color } as React.CSSProperties) : undefined}
+      >
+        <AgeGate isAgeRestricted={storefront?.is_age_restricted ?? false} />
         <ToastProvider />
         <ModalProvider />
-        <Navbar />
+        <Navbar
+          storeName={storefront?.store_name}
+          logoUrl={storefront?.logo_url}
+          primaryColor={storefront?.primary_color}
+        />
         {children}
         <Footer />
       </body>
