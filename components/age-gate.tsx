@@ -24,7 +24,7 @@ export default function AgeGate({ isAgeRestricted }: { isAgeRestricted: boolean 
         <h2 className="text-xl font-bold text-gray-900">Are you 18 or older?</h2>
         <p className="mt-2 text-sm text-gray-500">You must be of legal age to view this store.</p>
         <div className="mt-6 flex gap-3 justify-center">
-          <button onClick={confirm} className="px-5 py-2 rounded-lg bg-primary-600 text-white text-sm font-medium">Yes, enter</button>
+          <button onClick={confirm} className="px-5 py-2 rounded-lg bg-black text-white text-sm font-medium">Yes, enter</button>
           <a href="https://google.com" className="px-5 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700">No, leave</a>
         </div>
       </div>
