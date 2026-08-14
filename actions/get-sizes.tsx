@@ -1,11 +1,16 @@
 import { Size } from "@/types";
-
-const URL=`${process.env.NEXT_PUBLIC_API_URL}/sizes`;
+import { createServiceClient } from "@/lib/supabase";
+import { getStorefrontId } from "@/lib/tenant";
+import { mapSize } from "@/lib/mappers";
 
 const getSizes = async (): Promise<Size[]> => {
-  const res = await fetch(URL);
-
-  return res.json();
+  const supabase = createServiceClient();
+  const { data } = await supabase
+    .from("storefront_sizes")
+    .select("id, name, value, display_order")
+    .eq("storefront_id", getStorefrontId())
+    .order("display_order");
+  return (data ?? []).map(mapSize);
 };
 
 export default getSizes;

@@ -1,11 +1,16 @@
 import { Color } from "@/types";
-
-const URL=`${process.env.NEXT_PUBLIC_API_URL}/colors`;
+import { createServiceClient } from "@/lib/supabase";
+import { getStorefrontId } from "@/lib/tenant";
+import { mapColor } from "@/lib/mappers";
 
 const getColors = async (): Promise<Color[]> => {
-  const res = await fetch(URL);
-
-  return res.json();
+  const supabase = createServiceClient();
+  const { data } = await supabase
+    .from("storefront_colors")
+    .select("id, name, value, display_order")
+    .eq("storefront_id", getStorefrontId())
+    .order("display_order");
+  return (data ?? []).map(mapColor);
 };
 
 export default getColors;
